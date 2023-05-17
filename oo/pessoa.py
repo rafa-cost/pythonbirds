@@ -10,7 +10,7 @@ class Pessoa:
         self.filhos = list(filhos)  # aqui no caso seria uma lista
 
     def cumprimentar(self):
-        return f'Olá {id(self)}'
+        return f'Olá, meu nome é {self.nome}'
     @staticmethod
 #isso é um decorator do tipo metodo estatico, em geral eles ficam em cima de funções e metodos, depois de inserido o decorater, vc vai definir o
 # metodo como normalmente vc faria , utilizando a palavra reservada def e dando um nome para o metodo, vamos chamar de 'metodo estatico',
@@ -29,9 +29,19 @@ class Pessoa:
     #acessar o atributo olhos da classe
     def nome_e_atributos_de_classe(cls):
         return f'{cls} - olhos {cls.olhos}'
+
+class Homem(Pessoa):
+    def cumprimentar(self):
+        cumprimentar_da_classe = super().cumprimentar()
+        return f'{cumprimentar_da_classe}. Aperto de mão'
+
+
+class Mutante(Pessoa):
+    olhos = 3
+
 if __name__ == '__main__':
-    renzo = Pessoa(nome='Renzo')
-    luciano = Pessoa(renzo, nome='Luciano')  # aqui esta passando renzo como filho, por conta da função acima o __init__
+    renzo = Mutante(nome='Renzo')
+    luciano = Homem(renzo, nome='Luciano')  # aqui esta passando renzo como filho, por conta da função acima o __init__
     print(Pessoa.cumprimentar(luciano))
     print(id(luciano))
     print(luciano.cumprimentar())
@@ -52,6 +62,14 @@ if __name__ == '__main__':
     print(id(Pessoa.olhos), id(luciano.olhos), id(renzo.olhos))# e quando imprimir os numeros de id serão todos iguais
     print(Pessoa.metodo_estatico(), luciano.metodo_estatico())
     print(Pessoa.nome_e_atributos_de_classe(), luciano.nome_e_atributos_de_classe())
+    pessoa = Pessoa('Anonimo')
+    print(isinstance(pessoa, Pessoa))
+    print(isinstance(pessoa, Homem))
+    print(isinstance(renzo, Pessoa))
+    print(isinstance(renzo, Homem))
+    print(renzo.olhos)
+    print(luciano.cumprimentar())
+    print(renzo.cumprimentar())
 
 
 
